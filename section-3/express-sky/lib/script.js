@@ -19,6 +19,7 @@ ourApp.post("/answer", (request, response) => {
     if(request.body.skyColor.toLowerCase() == "blue") {
         // body is the body of the POST what they are sending and then we are looking inside
         // that for the skyColor property
+        // request.body returns an object { skyColor: 'userInput' }
         response.send(`
         <p>Congrats, that is the correct answer!</p>
         <a href="/">Back to homepage</a>
