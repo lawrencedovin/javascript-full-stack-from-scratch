@@ -2,11 +2,13 @@ let express = require("express");
 let mongodb = require("mongodb");
 
 let app = express();
-let db = mongodb();
+let db;
 
-let connectionString = '';
-mongodb.connect(connectionString, b, (error, client) => {
-
+let connectionString = 'mongodb+srv://todoAppUser:pungkin123@cluster0.u4auy.mongodb.net/ToDoApp?retryWrites=true&w=majority';
+mongodb.connect(connectionString, {useNewUrlParser: true}, (error, client) => {
+    db = client.db();
+    // by the time our app is ready for request our db variable is good to go
+    app.listen(3000);
 });
 
 app.use(express.urlencoded({extended: false}));
@@ -23,5 +25,3 @@ app.post('/create-item', (request, response) => {
         response.send("Thanks for submitting");
     })
 });
-
-app.listen(3000);
