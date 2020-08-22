@@ -4,6 +4,9 @@ let mongodb = require("mongodb");
 let app = express();
 let db;
 
+app.use(express.static('public'));
+// Will allow the content in the public folder be available from the root of our server
+
 let connectionString = 'mongodb+srv://todoAppUser:pungkin123@cluster0.u4auy.mongodb.net/ToDoApp?retryWrites=true&w=majority';
 mongodb.connect(connectionString, {useNewUrlParser: true}, (error, client) => {
     db = client.db();
@@ -54,6 +57,8 @@ app.get('/', (request, response) => {
                 
             </div>
             
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script src="/browser.js"></script>
             </body>
             </html>
         `);
