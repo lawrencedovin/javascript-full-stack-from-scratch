@@ -14,7 +14,15 @@ mongodb.connect(connectionString, {useNewUrlParser: true}, (error, client) => {
     app.listen(3000);
 });
 
+app.use(express.json());
+// We want the same action to happen as express.urlencoded
+// where we gather the user data and add it to a body object
+// but instead of submitted forms we want it for asynchronous requests.
+// for prompts.
+
 app.use(express.urlencoded({extended: false}));
+// Tells express to automatically take submitted form data and add it
+// to a body object that lives on the request object
 
 
 app.get('/', (request, response) => {
@@ -66,10 +74,14 @@ app.get('/', (request, response) => {
 });
 
 app.post('/create-item', (request, response) => {
-    console.log(request.body.item);
+    // console.log(request.body.item);
     // db.collection('items').insertOne({name: "Meowsalot", species: "cat"})
-    // MAKE NOTES WHEN YOU RETURN // 
     db.collection('items').insertOne({item: request.body.item}, () => {
         response.redirect('/')
     })
+});
+
+app.post('/update-item', (request, response) => {
+    console.log(request.body.item);
+    response.send("Success");
 });
