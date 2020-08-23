@@ -55,7 +55,7 @@ app.get('/', (request, response) => {
                             <li class="list-group-item list-group-item-action d-flex align-items-center justify-content-between">
                             <span class="item-text">${item.item}</span>
                             <div>
-                                <button class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
+                                <button data-id="${item._id}" class="edit-me btn btn-secondary btn-sm mr-1">Edit</button>
                                 <button class="delete-me btn btn-danger btn-sm">Delete</button>
                             </div>
                             </li>
@@ -82,6 +82,9 @@ app.post('/create-item', (request, response) => {
 });
 
 app.post('/update-item', (request, response) => {
-    console.log(request.body.item);
-    response.send("Success");
+    // will be used to communicate with our Mongo DB database
+    // find one document in your collection and then allow you to update it
+    db.collection('items').findOneAndUpdate({_id: new mongodb.ObjectID(request.body.id)}, {$set: {item: request.body.item}}, () => {
+        response.send("Success");
+    })
 });
